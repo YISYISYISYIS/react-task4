@@ -27,9 +27,9 @@ const TodoList: React.FC = () => {
       )
     ) {
       setSelectedCountries([...selectedCountries, country]);
-      setCountries(
-        countries.filter((c) => c.name.common !== country.name.common)
-      );
+      // setCountries(
+      //   countries.filter((c) => c.name.common !== country.name.common)
+      // );
     } else {
       setSelectedCountries(
         selectedCountries.filter(
@@ -37,7 +37,7 @@ const TodoList: React.FC = () => {
             selectedCountry.name.common !== country.name.common
         )
       );
-      setCountries([...countries, country]);
+      // setCountries([...countries, country]);
     }
   };
 
@@ -58,15 +58,23 @@ const TodoList: React.FC = () => {
       </div>
       <h1 style={{ color: " red" }}>나라 목록</h1>
       <div>
-        {countries.map((country: Country) => {
-          return (
-            <TodoItem
-              key={country.name.common}
-              country={country}
-              handleSelectCountry={handleSelectCountry}
-            />
-          );
-        })}
+        {countries
+          .filter(
+            (country: Country) =>
+              !selectedCountries.find(
+                (selectedCountry: Country) =>
+                  selectedCountry.name.common === country.name.common
+              )
+          )
+          .map((country: Country) => {
+            return (
+              <TodoItem
+                key={country.name.common}
+                country={country}
+                handleSelectCountry={handleSelectCountry}
+              />
+            );
+          })}
       </div>
     </div>
   );
